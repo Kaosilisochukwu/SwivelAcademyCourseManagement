@@ -17,7 +17,7 @@ namespace SwivelAcademyCourseManagement.Domain.Models
         [Required(ErrorMessage = "Course level is required")]
         public Level Level { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
+        [Range(1, double.MaxValue)]
         [Required(ErrorMessage = "Price Field is required")]
         public decimal Price { get; set; }
 
