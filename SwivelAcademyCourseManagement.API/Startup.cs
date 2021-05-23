@@ -2,14 +2,21 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SwivelAcademyCourseManagement.Data;
+using SwivelAcademyCourseManagement.Data.Contracts;
+using SwivelAcademyCourseManagement.Data.Repository;
+using SwivelAcademyCourseManagement.Domain.Maps;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace SwivelAcademyCourseManagement.API
@@ -27,10 +34,22 @@ namespace SwivelAcademyCourseManagement.API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //services.AddControllers().AddNewtonsoftJson();            
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
+            services.AddHealthChecks();
+            services.AddDbContext<ApplicationDbContext>(option => option.UseSqlite(Configuration.GetConnectionString("Value")));
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SwivelAcademyCourseManagement.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SwivelAcademyCourseManagement.API", Version = "v1",
+                    Description = "A simple Course Managment Api"
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
