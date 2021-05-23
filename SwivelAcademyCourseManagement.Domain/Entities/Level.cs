@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SwivelAcademyCourseManagement.Domain.Entities
+﻿namespace SwivelAcademyCourseManagement.Domain.Entities
 {
     public enum Level
     {
-        Begginner,
+        Begginner = 1,
         Intermediate,
         Advanced
     }

@@ -9,7 +9,7 @@ namespace SwivelAcademyCourseManagement.Domain.Maps
         public MappingProfiles()
         {
             CreateMap<TeacherToRegisterDTO, Teacher>();
-            CreateMap<StudentToRegisterDTO, Teacher>();
+            CreateMap<StudentToRegisterDTO, Student>();
             CreateMap<StudentToUpdateDTO, Student>();
             CreateMap<TeacherToUpdateDTO, Teacher>();
             CreateMap<CourseToAddDTO, Course>();

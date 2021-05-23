@@ -16,7 +16,7 @@ namespace SwivelAcademyCourseManagement.Domain.DTOs
         [Required(ErrorMessage = "Course level is required")]
         public Level Level { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
+        [Range(1, double.MaxValue, ErrorMessage = "Price must be greater than 1")]
         [Required(ErrorMessage = "Price Field is required")]
         public decimal Price { get; set; }
     }
